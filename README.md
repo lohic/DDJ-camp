@@ -8,6 +8,12 @@ Code editor if needed:
 - [http://www.sublimetext.com](http://www.sublimetext.com)
 - [https://atom.io](https://atom.io)
 
+Generic tools:
+
+- [http://papaparse.com](http://papaparse.com) to parse CSV (be careful a local or an online server is needed, cf [Mamp](https://www.mamp.info/en/))
+- [https://color.adobe.com/fr/](https://color.adobe.com/fr/) to deal with color charts
+- [http://www.regexr.com](http://www.regexr.com) to try a write [regular expressions](https://en.wikipedia.org/wiki/Regular_expression), useful to analyse huge portion or to make replacement in text.
+
 Charts, timeline and other dataviz library or tools:
 
 - [https://www.infogr.am](https://www.infogr.am)
@@ -23,6 +29,7 @@ Charts, timeline and other dataviz library or tools:
 - [https://github.com/teralytics/Leaflet.D3SvgOverlay](https://github.com/teralytics/Leaflet.D3SvgOverlay)
 - [http://geojson.io/](http://geojson.io/)
 - [https://www.mapbox.com](https://www.mapbox.com)
+- [http://www.tableau.com](http://www.tableau.com)
 
 ## Google charts ##
 
