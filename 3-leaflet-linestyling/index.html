@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Simple leaflet map / Line styling</title>
+	<link rel="stylesheet" href="js/leaflet/leaflet.css" />
+	<style type="text/css" media="screen">
+
+		html, body{
+			height: 100%;
+			width: 100%;
+			margin: 0;
+		}
+
+		#map {
+			height: 100%;
+			margin: 0 10%;
+			z-index: 2;
+		}
+
+	</style>
+
+</head>
+<body>
+	
+	<div id="map"></div>
+
+	<script src="js/leaflet/leaflet.js"></script>
+	<script src="js/leaflet.PolylineDecorator/leaflet.polylineDecorator.js"></script>
+	<script src="refugee_help_map.geojson" type="text/javascript"></script>
+	<script type="text/javascript">
+
+  
+		var osmUrl		= 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+		var osmAttrib	= 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+		var osmTiles	= new L.TileLayer(osmUrl, {
+			// minZoom: 10,
+			// maxZoom: 18,
+			attribution: osmAttrib
+		});
+
+
+		var SouthWest 	 	= L.latLng(52.354659, 13.028051),
+		    NorthEast 	 	= L.latLng(52.707861, 13.696250),
+		    LimitsOfTheMap 	= L.latLngBounds(SouthWest, NorthEast);
+
+		var map = new L.map('map',{
+			// maxBounds: LimitsOfTheMap, // enable or disable the ability to scroll outside of the bounds
+			layers: [osmTiles]
+		});
+        map.fitBounds(LimitsOfTheMap); // fit the bounds defined 
+
+        // OR map.setView([51.505, -0.09], 13);
+
+        // this is scanning the geojson file
+		L.geoJSON(refugee_data, {
+		    style: function(feature) {},
+		    onEachFeature: forEachPointFinded //this is the call to a function for each point
+
+		}).addTo(map);
+
+		// this is the declaration of the function forEachPointFinded
+		function forEachPointFinded(feature, layer) {
+			// if a description is found
+			if (feature.properties.description) {
+				// we add a popup on the click event
+				// the content of the popup is the Name and the description
+		        layer.bindPopup("<h1>"+feature.properties.Name+"</h1><div>"+feature.properties.description+"</div>");
+		    }
+		}
+
+
+		// this is how to add a line composed of differents points
+		var polyline  = L.polyline( [
+				[52.354659, 13.028051], // 1st point
+				[52.707861, 13.696250]	// 2nd point, ...
+			],
+			{
+				color: 'red', 			// color
+			    weight:4,				// weight of the line
+			    opacity:0.5				// opacity of the line
+			}
+		).addTo(map);					// we add it on the map
+
+
+		// If we wan't to style the line (we are using a library included on the line n°30 of this file)
+		var decorator = L.polylineDecorator(polyline, {
+		    patterns: [
+		        // defines a pattern of 10px-wide dashes, repeated every 20px on the line
+		        {
+		        	offset: 0,
+		        	repeat: 40,
+		        	symbol: L.Symbol.dash({ pixelSize: 20, color: '#f00', weight: 2 })
+		        }
+		    ]
+		}).addTo(map);
+
+
+		/* OTHER PATTERNS TAKEN FROM THE EXAMPLES
+		patterns: [
+			{ offset: 12, repeat: 25, symbol: L.Symbol.dash({pixelSize: 10, pathOptions: {color: '#f00', weight: 2}}) },
+			{ offset: 0, repeat: 25, symbol: L.Symbol.dash({pixelSize: 0}) }
+		]
+		patterns: [
+			{offset: 25, repeat: 50, symbol: L.Symbol.arrowHead({pixelSize: 30, pathOptions: {fillOpacity: 1, weight: 0}})}
+		]
+		patterns: [
+			{ offset: 0, repeat: 10, symbol: L.Symbol.dash({pixelSize: 5, pathOptions: {color: '#000', weight: 40, opacity: 0.2}}) },
+			{ offset: '16%', repeat: '33%', symbol: L.Symbol.marker(
+				{rotate: true, markerOptions: {
+					icon: L.icon({
+						iconUrl: 'js/leaflet.PolylineDecorator/example/icon_plane.png',
+						iconAnchor: [16, 16]
+					})
+				}}
+			)}
+		]
+		*/
+
+
+	</script>
+</body>
+</html>
