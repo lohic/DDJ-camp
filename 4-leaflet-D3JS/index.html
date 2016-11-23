@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Simple leaflet map</title>
+	<title>Simple leaflet map / D3JS + Leaflet example</title>
 	<link rel="stylesheet" href="js/leaflet/leaflet.css" />
 	<style type="text/css" media="screen">
 
@@ -27,14 +27,17 @@
 	<div id="map"></div>
 
 	<script src="js/leaflet/leaflet.js"></script>
+	<script src="js/d3/d3.min.js"></script>
+	<script src="js/Leaflet.D3SvgOverlay-2.2/L.D3SvgOverlay.min.js"></script>
+	<script src="data/refugee_help_map.geojson" type="text/javascript"></script>
 	<script type="text/javascript">
 
   
 		var osmUrl		= 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 		var osmAttrib	= 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
 		var osmTiles	= new L.TileLayer(osmUrl, {
-			minZoom: 10,
-			maxZoom: 18,
+			// minZoom: 10,
+			// maxZoom: 18,
 			attribution: osmAttrib
 		});
 
@@ -44,13 +47,34 @@
 		    LimitsOfTheMap 	= L.latLngBounds(SouthWest, NorthEast);
 
 		var map = new L.map('map',{
-			maxBounds: LimitsOfTheMap, // disable the ability to scroll outside of the bounds
+			// maxBounds: LimitsOfTheMap, // enable or disable the ability to scroll outside of the bounds
 			layers: [osmTiles]
 		});
-
         map.fitBounds(LimitsOfTheMap); // fit the bounds defined 
 
         // OR map.setView([51.505, -0.09], 13);
+
+        // this is scanning the geojson file
+		L.geoJSON(refugee_data, {
+		    style: function(feature) {},
+		    onEachFeature: forEachPointFinded //this is the call to a function for each point
+
+		}).addTo(map);
+
+		// this is the declaration of the function forEachPointFinded
+		function forEachPointFinded(feature, layer) {
+			// if a description is found
+			if (feature.properties.description) {
+				// we add a popup on the click event
+				// the content of the popup is the Name and the description
+		        layer.bindPopup("<h1>"+feature.properties.Name+"</h1><div>"+feature.properties.description+"</div>");
+		    }
+		}
+
+
+
+
+
 
 
 	</script>
