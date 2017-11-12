@@ -44,13 +44,13 @@ To export chart has an image, and be able to download it
 - [http://timeline.knightlab.com](http://timeline.knightlab.com)
 - [link to the spreadsheet template (to save in your google drive)](https://drive.google.com/previewtemplate?id=1pHBvXN7nmGkiG8uQSUB82eNlnL8xHu6kydzH_-eguHQ&mode=public)
 
-##Leaflet
+## Leaflet
 
-###1 - simple leaflet ###
+### 1 - simple leaflet ###
 
 A simple leaflet starter file, with open street map data. Leaflet is an opensource map library, that can be used with external data (Openstreetmap or mapbox) or even bitmap pictures. For this last example 
 
-###2 - geojson demo ###
+### 2 - geojson demo ###
 
 Data downloaded from [refugeehackathon](https://github.com/refugeehackathon/refugeetransit-android/blob/master/testdata/refugee-help-map.geojson)
 
